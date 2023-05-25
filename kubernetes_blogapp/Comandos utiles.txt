@@ -1,0 +1,28 @@
+*Comando cheeky  monkey:
+python cheekymonkey.py --exclude kube-system locust kube-node-lease kube-public istio-system
+
+*Abrir Kiali
+istioctl dashboard kiali
+
+*Para acceder al pod: 
+kubectl exec -it <nombre-del-pod> -- /bin/bash
+
+*Hacer contenedor de docker:
+docker build -t nombreIm .
+docker run -d --name nombre -p 00:00 imagen
+
+*Crear tunel para servicio de kubernetes en minikube:
+minikube service service --url
+
+*Copia seguridad sql
+mysqldump -u usuario -p nombredb > copia-db.sql
+docker cp copia-db:/copia-db.sql C:/Users/PC/Desktop/blog_docker/copia-db.sql
+docker exec -it contenedor mysqldump -u usuario -p nombredb > copia-db.sql
+
+*Cargar copia sql
+mysql -u usuario -p -e "CREATE DATABASE nombredb;"
+mysql -u usuario -p nombredb < copia-db.sql
+
+
+
+
