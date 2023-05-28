@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,3 +26,12 @@ spec:
               value: password
           ports:
             - containerPort: 3306
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mysql-data
+              
+      volumes:
+        - name: mysql-data
+          hostPath:
+            path: /docker-entrypoint-initdb.d
+            type: Directory

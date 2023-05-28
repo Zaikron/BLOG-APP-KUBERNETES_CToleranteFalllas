@@ -12,9 +12,12 @@ docker build -t nombreIm .
 docker run -d --name nombre -p 00:00 imagen
 
 *Crear tunel para servicio de kubernetes en minikube:
-minikube service service --url
+minikube service nombre --url
 
 *Copia seguridad sql
+
+kubectl exec mysql-6564677b66-vt59s -- mysqldump -u root -ppassword blog > ./docker-entrypoint-initdb.d/blog-db.sql
+
 mysqldump -u usuario -p nombredb > copia-db.sql
 docker cp copia-db:/copia-db.sql C:/Users/PC/Desktop/blog_docker/copia-db.sql
 docker exec -it contenedor mysqldump -u usuario -p nombredb > copia-db.sql
