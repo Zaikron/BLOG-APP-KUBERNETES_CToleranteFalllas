@@ -4,6 +4,13 @@ python cheekymonkey.py --exclude kube-system locust kube-node-lease kube-public 
 *Abrir Kiali
 istioctl dashboard kiali
 
+*Crear tunel para servicio de kubernetes en minikube:
+minikube service nombre --url
+
+*Copia seguridad sql
+Crear copia en host: kubectl exec <nombrepod> -- mysqldump -u root -ppassword blog > ./docker-entrypoint-initdb.d/blog-db.sql
+Copiar sql a pod: kubectl cp ./docker-entrypoint-initdb.d/blog-db.sql <nombrepod>:docker-entrypoint-initdb.d/blog-db.sql
+
 *Para acceder al pod: 
 kubectl exec -it <nombre-del-pod> -- /bin/bash
 
@@ -11,20 +18,6 @@ kubectl exec -it <nombre-del-pod> -- /bin/bash
 docker build -t nombreIm .
 docker run -d --name nombre -p 00:00 imagen
 
-*Crear tunel para servicio de kubernetes en minikube:
-minikube service nombre --url
-
-*Copia seguridad sql
-
-kubectl exec mysql-6564677b66-vt59s -- mysqldump -u root -ppassword blog > ./docker-entrypoint-initdb.d/blog-db.sql
-
-mysqldump -u usuario -p nombredb > copia-db.sql
-docker cp copia-db:/copia-db.sql C:/Users/PC/Desktop/blog_docker/copia-db.sql
-docker exec -it contenedor mysqldump -u usuario -p nombredb > copia-db.sql
-
-*Cargar copia sql
-mysql -u usuario -p -e "CREATE DATABASE nombredb;"
-mysql -u usuario -p nombredb < copia-db.sql
 
 
 
