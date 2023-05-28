@@ -54,7 +54,7 @@ EXPOSE 80
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public"]
 ```
 
-#### Dokcerfile para la base de datos de la aplicacion
+#### Dokcerfile para la base de datos de la aplicacion (mysql)
 ```dockerfile
 FROM mysql:8.0
 
@@ -72,7 +72,7 @@ EXPOSE 3306
 
 ### <p align="center"> Kubernetes</p>
 
-#### Deployment para la aplicacion
+#### Deployment para la aplicacion (deployment.yaml)
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -104,7 +104,7 @@ spec:
             value: password
 ```
 
-#### Servicio para la aplicacion
+#### Servicio para la aplicacion (service.yaml)
 ```yaml
 apiVersion: v1
 kind: Service
@@ -120,7 +120,7 @@ spec:
   type: LoadBalancer
 ```
 
-#### Deployment para la base de datos
+#### Deployment para la base de datos (mysql.yaml)
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -150,9 +150,17 @@ spec:
               value: password
           ports:
             - containerPort: 3306
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mysql-data
+              
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+              claimName: mysql-pvc
 ```
 
-#### Servicio para la base de datos
+#### Servicio para la base de datos (mysqlservice.yaml)
 ```yaml
 apiVersion: v1
 kind: Service
@@ -166,4 +174,19 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
+```
+
+#### Volumen para copia de seguridad de base de datos (pvc.yaml)
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: do-block-storage
 ```
