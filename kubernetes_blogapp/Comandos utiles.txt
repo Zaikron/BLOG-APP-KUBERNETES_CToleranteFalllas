@@ -8,8 +8,10 @@ istioctl dashboard kiali
 minikube service nombre --url
 
 *Copia seguridad sql
-Crear copia en host: kubectl exec <nombrepod> -- mysqldump -u root -ppassword blog > ./docker-entrypoint-initdb.d/blog-db.sql
-Copiar sql a pod: kubectl cp ./docker-entrypoint-initdb.d/blog-db.sql <nombrepod>:docker-entrypoint-initdb.d/blog-db.sql
+Crear copia en host: 
+        kubectl exec <nombrepod> -- mysqldump -u root -ppassword blog > ./docker-entrypoint-initdb.d/blog-db.sql
+Copiar sql a pod: 
+        kubectl cp ./docker-entrypoint-initdb.d/blog-db.sql <nombrepod>:docker-entrypoint-initdb.d/blog-db.sql
 
 *Para acceder al pod: 
 kubectl exec -it <nombre-del-pod> -- /bin/bash
