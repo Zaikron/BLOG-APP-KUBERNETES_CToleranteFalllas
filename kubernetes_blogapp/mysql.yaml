@@ -32,6 +32,5 @@ spec:
               
       volumes:
         - name: mysql-data
-          hostPath:
-            path: /docker-entrypoint-initdb.d
-            type: Directory
+          persistentVolumeClaim:
+              claimName: mysql-pvc
